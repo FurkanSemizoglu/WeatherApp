@@ -11,7 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:id="@+id/mainAreaLayout"
+        android:background="@drawable/gradient_background"
         >
 
 
@@ -27,14 +28,16 @@
         </ProgressBar>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/errorTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Error,Try Again"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+
+        </TextView>
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -65,6 +68,7 @@
 
 
                 <TextView
+                    android:id="@+id/weatherDegree"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -93,14 +97,16 @@
 
 
                             <TextView
+                                android:id="@+id/countryCode"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Country Code"
+                                android:text="Country Name"
                                 android:textSize="30sp">
 
                             </TextView>
 
                             <TextView
+                                android:id="@+id/countryName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Country Code"
@@ -134,9 +140,10 @@
 
 
                             <TextView
+
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Country Code"
+                                android:text="Wind Speed :"
                                 android:textSize="15sp">
 
                             </TextView>
@@ -144,7 +151,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Country Code"
+                                android:text="Feels Like :"
                                 android:textSize="15sp">
 
                             </TextView>
@@ -152,7 +159,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Country Code"
+                                android:text="Temp :"
                                 android:textSize="15sp">
 
                             </TextView>
@@ -160,7 +167,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Country Code"
+                                android:text="Description :"
                                 android:textSize="15sp">
 
                             </TextView>
@@ -175,33 +182,37 @@
 
 
                             <TextView
+                                android:id="@+id/windSpeed"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Country Code"
+                                android:text="..."
                                 android:textSize="15sp">
 
                             </TextView>
 
                             <TextView
+                                android:id="@+id/feelsLike"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Country Code"
+                                android:text="..."
                                 android:textSize="15sp">
 
                             </TextView>
 
                             <TextView
+                                android:id="@+id/weatherTemp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Country Code"
+                                android:text="..."
                                 android:textSize="15sp">
 
                             </TextView>
 
                             <TextView
+                                android:id="@+id/weatherDescription"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Country Code"
+                                android:text="..."
                                 android:textSize="15sp">
 
                             </TextView>
