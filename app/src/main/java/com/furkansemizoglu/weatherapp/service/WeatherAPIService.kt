@@ -21,7 +21,7 @@ class WeatherAPIService {
         .create(WeatherAPI::class.java)
 
 
-    private fun getData() : Single<WeatherModel>{
+    fun getData() : Single<WeatherModel>{
         return api.getWeatherData()
     }
 
