@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +25,8 @@ class MainFragment : Fragment() {
     private lateinit var GET : SharedPreferences
     private lateinit var SET : SharedPreferences.Editor
 
+    private lateinit var cName : String
+
     val PREFS_FILENAME = "com.furkansemizoglu.weatherapp"
 
 
@@ -37,14 +40,14 @@ class MainFragment : Fragment() {
 
         SET = GET.edit()
 
-
-        val city = "ankara"
+        cName = GET.getString("cityName","Samsun").toString()
+       // val city = "ankara"
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.refreshData(city)
+        viewModel.refreshData(cName)
 
-        var cName = GET.getString("cityName","Samsun")
 
-        binding.searchAreaView.setQuery(cName,false)
+
+        binding.searchAreaView.setText(cName)
     }
 
     override fun onCreateView(
@@ -65,9 +68,31 @@ class MainFragment : Fragment() {
             binding.progressBar.visibility = View.VISIBLE
             binding.errorTextView.visibility = View.GONE
             binding.swipeRefreshLayout.isRefreshing = false
-         //   viewModel.refreshData()
+            viewModel.refreshData(cName)
             observeLiveData()
         }
+
+        binding.searchButton.setOnClickListener {
+            cName = binding.searchAreaView.text.toString()
+            viewModel.refreshData(cName)
+            observeLiveData()
+        }
+/*
+        binding.searchAreaView.setOnQueryTextFocusChangeListener { v, hasFocus ->
+            Toast.makeText(activity,"workingg differnet",Toast.LENGTH_LONG).show()
+            val cityName =  binding.searchAreaView.query.toString()
+            viewModel.refreshData(cityName)
+            observeLiveData()
+        }
+
+        binding.searchAreaView.setOnSearchClickListener {
+            Toast.makeText(activity,"workingg",Toast.LENGTH_LONG).show()
+            val cityName =  binding.searchAreaView.query.toString()
+            viewModel.refreshData(cityName)
+            observeLiveData()
+        }
+
+ */
 
 
 
