@@ -30,15 +30,15 @@ class MainViewModel() : ViewModel(){
 
 
 
-    fun refreshData(){
-        getDataFromAPI()
+    fun refreshData(cityName: String){
+        getDataFromAPI(cityName)
     }
 
-    fun getDataFromAPI(){
+    fun getDataFromAPI(cityName : String){
 
         weatherLoading.value = true
 
-        disposable.add(weatherApiService.getData()
+        disposable.add(weatherApiService.getData(cityName)
             .subscribeOn(io.reactivex.rxjava3.schedulers.Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object :

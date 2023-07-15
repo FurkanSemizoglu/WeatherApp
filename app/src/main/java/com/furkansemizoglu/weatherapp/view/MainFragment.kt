@@ -1,13 +1,15 @@
 package com.furkansemizoglu.weatherapp.view
 
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.furkansemizoglu.weatherapp.R
 import com.furkansemizoglu.weatherapp.databinding.FragmentMainBinding
 import com.furkansemizoglu.weatherapp.viewmodel.MainViewModel
@@ -19,11 +21,30 @@ class MainFragment : Fragment() {
     private lateinit var viewModel : MainViewModel
 
 
+    private lateinit var GET : SharedPreferences
+    private lateinit var SET : SharedPreferences.Editor
+
+    val PREFS_FILENAME = "com.furkansemizoglu.weatherapp"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentMainBinding.inflate(layoutInflater)
+
+      //  GET  = this.requireActivity().getSharedPreferences()
+        GET = this.requireActivity()
+            .getSharedPreferences(PREFS_FILENAME, MODE_PRIVATE)
+
+        SET = GET.edit()
+
+
+        val city = "ankara"
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel.refreshData(city)
+
+        var cName = GET.getString("cityName","Samsun")
+
+        binding.searchAreaView.setQuery(cName,false)
     }
 
     override fun onCreateView(
@@ -38,8 +59,17 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.refreshData()
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+         //   binding.mainAreaLayout.visibility = View.GONE
+            binding.progressBar.visibility = View.VISIBLE
+            binding.errorTextView.visibility = View.GONE
+            binding.swipeRefreshLayout.isRefreshing = false
+         //   viewModel.refreshData()
+            observeLiveData()
+        }
+
+
 
         observeLiveData()
     }
@@ -56,6 +86,12 @@ class MainFragment : Fragment() {
                 binding.windSpeed.text = it.wind.speed.toString()
                 binding.weatherTemp.text = it.main.temp.toString()
                 binding.weatherDescription.text = it.weather[0].description.toString()
+
+                Glide
+                    .with(this)
+                    .load("https://openweathermap.org/img/wn/" + it.weather[0].icon + "@2x.png")
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .into(binding.weatherIcon)
             }
         })
 
@@ -73,7 +109,7 @@ class MainFragment : Fragment() {
 
             }
         })
-/*
+
         viewModel.weatherError.observe(viewLifecycleOwner, Observer {
             it?.let {
                 if (it){
@@ -83,8 +119,11 @@ class MainFragment : Fragment() {
                 }
 
             }
-        })*/
+        })
 
-        viewModel.weatherError.observe()
+
+
+
+
     }
 }
